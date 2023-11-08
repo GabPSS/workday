@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:workday/data/app_data.dart';
+import 'package:workday/data/user_data.dart';
+import 'package:workday/ui/app_page.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(MultiProvider(
+      // create: (BuildContext context) => AppData.empty(),
+      providers: [
+        ChangeNotifierProvider(create: (context) => AppData.empty()),
+        ChangeNotifierProvider(create: (context) => UserData.empty())
+      ],
+      child: const MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -10,11 +20,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+      home: AppPage(),
     );
   }
 }
