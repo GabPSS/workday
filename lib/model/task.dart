@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Task {
-  String? id; //TODO: Maybe don't make this nullable?
+  String? id;
   DateTime? createdOn;
   DateTime? due;
   List<String> description = List.empty(growable: true);
@@ -37,6 +37,16 @@ class Task {
           assignedTo: assignedTo);
     }).toList();
   }
+
+  Map<String, Object?> toMap() {
+    return {
+      'created_at': createdOn?.toUtc().toString(),
+      'due': due?.toUtc().toString(),
+      'contents': description,
+      'status': taskStatusToInt(status),
+      'assigned_to': assignedTo
+    };
+  }
 }
 
 enum TaskStatus { open, started, pending, done }
@@ -53,5 +63,18 @@ TaskStatus intToTaskStatus(int value) {
       return TaskStatus.done;
     default:
       return TaskStatus.open;
+  }
+}
+
+int taskStatusToInt(TaskStatus status) {
+  switch (status) {
+    case TaskStatus.open:
+      return 0;
+    case TaskStatus.started:
+      return 1;
+    case TaskStatus.pending:
+      return 2;
+    case TaskStatus.done:
+      return 3;
   }
 }

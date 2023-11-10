@@ -47,8 +47,9 @@ class AppData extends ChangeNotifier {
     return "Success";
   }
 
-  void addTask(Task task) {
+  Future<void> addTask(Task task) async {
     _tasks.add(task);
+    await Supabase.instance.client.from('tasks').insert(task.toMap());
     notifyListeners();
   }
 

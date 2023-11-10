@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/model/task.dart';
+import 'package:workday/ui/task_page.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key});
@@ -20,12 +21,8 @@ class _AppPageState extends State<AppPage> {
       floatingActionButton: Consumer<AppData>(
         builder: (context, value, child) => FloatingActionButton(
           onPressed: () {
-            value.addTask(Task(
-              description: [
-                'Test',
-                'test'
-              ], /*value.users[Random().nextInt(value.users.length)].id*/
-            ));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const TaskPage()));
           },
           tooltip: 'Add task',
           child: const Icon(Icons.add_task),
@@ -130,7 +127,8 @@ class _TaskListViewState extends State<TaskListView> {
           title: Text(task.description[0]), //TODO: Safeguard here
           subtitle: Text("User ID: ${task.assignedTo}"),
           onTap: () {
-            //TODO: Open task
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TaskPage(task: task)));
           },
         );
       },
