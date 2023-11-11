@@ -1,8 +1,16 @@
+import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
+
 class User {
-  String? id; //TODO: (and this one also)
-  String name = "Unknown";
+  String email;
+  String name;
 
-  User({this.id, this.name = "Unknown"});
+  User({required this.email, required this.name});
 
-  User.placeholder();
+  static List<User> parseUsersList(supabase.PostgrestList source) {
+    return source.map((e) {
+      var name = e['name'] as String;
+      var email = e['email'] as String;
+      return User(email: email, name: name);
+    }).toList();
+  }
 }

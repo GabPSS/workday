@@ -1,26 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workday/data/app_data.dart';
-import 'package:workday/data/user_data.dart';
+import 'package:workday/data/login.dart';
+import 'package:workday/secrets.dart';
 import 'package:workday/ui/app_page.dart';
+import 'package:workday/ui/login_page.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(url: backendUrl, anonKey: backendKey);
+  Login login = Login();
+  bool loginResult = await login.fetch();
+
   runApp(MultiProvider(
       // create: (BuildContext context) => AppData.empty(),
       providers: [
         ChangeNotifierProvider(create: (context) => AppData.empty()),
-        ChangeNotifierProvider(create: (context) => UserData.empty())
+        ChangeNotifierProvider(create: (context) => login)
       ],
-      child: const MainApp()));
+      child: MainApp(loggedIn: loginResult)));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  final bool loggedIn;
+
+  const MainApp({super.key, this.loggedIn = false});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: AppPage(),
+    return MaterialApp(
+      home: loggedIn ? const AppPage() : const LoginPage(),
     );
   }
 }
