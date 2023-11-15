@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.18.1
   provider: ^6.0.5
   supabase: ^1.11.11
   supabase_flutter: ^1.10.25

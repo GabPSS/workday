@@ -32,8 +32,14 @@ class Login extends ChangeNotifier {
   Future<bool> trySignIn(String? email, String? password) async {
     if (email == null || password == null) return false;
     log('Attempting login');
-    AuthResponse response = await Supabase.instance.client.auth
-        .signInWithPassword(password: password, email: email);
+    AuthResponse response;
+    try {
+      response = await Supabase.instance.client.auth
+          .signInWithPassword(password: password, email: email);
+    } catch (x) {
+      log('Login Failed, check credentials');
+      return false;
+    }
 
     if (response.session != null && response.user != null) {
       log('Login successful, retrieving user data');

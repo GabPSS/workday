@@ -20,9 +20,13 @@ class _AppPageState extends State<AppPage> {
     return Scaffold(
       floatingActionButton: Consumer<AppData>(
         builder: (context, value, child) => FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context,
+          onPressed: () async {
+            Task? result = await Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const TaskPage()));
+            if (result != null) {
+              if (!mounted) return;
+              Provider.of<AppData>(context, listen: false).addTask(result);
+            }
           },
           tooltip: 'Add task',
           child: const Icon(Icons.add_task),
@@ -40,7 +44,13 @@ class _AppPageState extends State<AppPage> {
       appBar: AppBar(
         title: const Text('Workday'),
         actions: [
-          // const AccountSwitcher(),
+          Tooltip(
+            message: "Sync status",
+            child: Consumer<AppData>(
+                builder: (context, value, child) => value.isUpdating
+                    ? const Icon(Icons.cloud_sync)
+                    : const Icon(Icons.cloud_done)),
+          ),
           PopupMenuButton(
             itemBuilder: (context) => [
               const PopupMenuItem(
@@ -78,7 +88,7 @@ class _AppPageState extends State<AppPage> {
   }
 
   Widget getPage(int index) {
-    ///0: Task pool
+    ///0: Task poola
     ///1: My tasks
     ///
     ///TODO: Implement pages
@@ -86,7 +96,7 @@ class _AppPageState extends State<AppPage> {
       case 0:
         return Consumer<AppData>(
             builder: (context, appData, child) => TaskListView(
-                  tasks: appData.tasksPool,
+                  tasks: appData.tasks,
                   appData: appData,
                 ));
       case 1:
@@ -121,17 +131,7 @@ class _TaskListViewState extends State<TaskListView> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemBuilder: (context, index) {
-        Task task = widget.tasks[index];
-        return ListTile(
-          title: Text(task.description[0]), //TODO: Safeguard here
-          subtitle: Text("User ID: ${task.assignedTo}"),
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TaskPage(task: task)));
-          },
-        );
-      },
+      itemBuilder: (context, index) => widget.tasks[index].tile,
       itemCount: widget.tasks.length,
     );
   }

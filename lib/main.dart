@@ -11,13 +11,17 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(url: backendUrl, anonKey: backendKey);
+  var appData = AppData.empty();
   Login login = Login();
   bool loginResult = await login.fetch();
+  if (loginResult) {
+    await appData.fetchData(false);
+  }
 
   runApp(MultiProvider(
       // create: (BuildContext context) => AppData.empty(),
       providers: [
-        ChangeNotifierProvider(create: (context) => AppData.empty()),
+        ChangeNotifierProvider(create: (context) => appData),
         ChangeNotifierProvider(create: (context) => login)
       ],
       child: MainApp(loggedIn: loginResult)));
