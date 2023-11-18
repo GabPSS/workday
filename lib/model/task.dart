@@ -72,8 +72,8 @@ class Task {
 
   factory Task.fromMap(Map<String, Object?> map) {
     var id = map['id'] as String?;
-    var createdAt = DateTime.tryParse(map['created_at'] as String);
-    var due = map['due'] as DateTime?;
+    var createdAt = DateTime.tryParse(map['created_at'] as String? ?? "");
+    var due = DateTime.tryParse(map['due'] as String? ?? "");
     var contents = (map['contents'] as List<dynamic>).cast<String>();
     var status = map['status'] as int;
     var assignedTo = map['assigned_to'] as String?;

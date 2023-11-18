@@ -1,7 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide Provider;
 import 'package:workday/model/task.dart';
 import 'package:workday/model/user.dart' as workday_user;
 
@@ -90,4 +91,7 @@ class AppData extends ChangeNotifier {
       return null;
     }
   }
+
+  static AppData of(BuildContext context) =>
+      Provider.of<AppData>(context, listen: false);
 }

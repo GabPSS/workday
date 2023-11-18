@@ -44,9 +44,11 @@ class _AppPageState extends State<AppPage> {
       appBar: AppBar(
         title: const Text('Workday'),
         actions: [
-          Tooltip(
-            message: "Sync status",
-            child: Consumer<AppData>(
+          IconButton(
+            onPressed: () {
+              AppData.of(context).fetchData();
+            },
+            icon: Consumer<AppData>(
                 builder: (context, value, child) => value.isUpdating
                     ? const Icon(Icons.cloud_sync)
                     : const Icon(Icons.cloud_done)),
