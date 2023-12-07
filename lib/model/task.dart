@@ -50,22 +50,6 @@ class Task {
 
   static List<Task> parseTaskList(PostgrestList tasksData) {
     return tasksData.map((taskMap) {
-      // var id = taskMap['id'] as String;
-      // var createdAt = DateTime.tryParse(taskMap['created_at'] as String);
-      // var due = taskMap['due'] as DateTime?;
-      // var contents = (taskMap['contents'] as List<dynamic>).cast<String>();
-      // var status = taskMap['status'] as int;
-      // var assignedTo = taskMap['assigned_to'] as String?;
-      // var title = taskMap['title'] as String;
-
-      // return Task(
-      //     id: id,
-      //     createdOn: createdAt,
-      //     due: due,
-      //     description: contents,
-      //     status: intToTaskStatus(status),
-      //     assignedTo: assignedTo,
-      //     title: title);
       return Task.fromMap(taskMap);
     }).toList();
   }

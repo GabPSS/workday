@@ -18,13 +18,10 @@ Future<void> main() async {
     await appData.fetchData(false);
   }
 
-  runApp(MultiProvider(
-      // create: (BuildContext context) => AppData.empty(),
-      providers: [
-        ChangeNotifierProvider(create: (context) => appData),
-        ChangeNotifierProvider(create: (context) => login)
-      ],
-      child: MainApp(loggedIn: loginResult)));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => appData),
+    ChangeNotifierProvider(create: (context) => login)
+  ], child: MainApp(loggedIn: loginResult)));
 }
 
 class MainApp extends StatelessWidget {
