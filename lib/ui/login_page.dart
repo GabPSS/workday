@@ -55,6 +55,8 @@ class _LoginPageState extends State<LoginPage> {
 
     if (result == false) {
       setState(() => attemptingLogin = false);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to log in, check internet and credentials')));
       return;
     }
 

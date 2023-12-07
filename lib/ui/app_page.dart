@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/model/task.dart';
+import 'package:workday/ui/task_page.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key});
@@ -19,13 +20,13 @@ class _AppPageState extends State<AppPage> {
     return Scaffold(
       floatingActionButton: Consumer<AppData>(
         builder: (context, value, child) => FloatingActionButton(
-          onPressed: () {
-            value.addTask(Task(
-              description: [
-                'Test',
-                'test'
-              ], /*value.users[Random().nextInt(value.users.length)].id*/
-            ));
+          onPressed: () async {
+            Task? result = await Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const TaskPage()));
+            if (result != null) {
+              if (!mounted) return;
+              Provider.of<AppData>(context, listen: false).addTask(result);
+            }
           },
           tooltip: 'Add task',
           child: const Icon(Icons.add_task),
@@ -43,7 +44,15 @@ class _AppPageState extends State<AppPage> {
       appBar: AppBar(
         title: const Text('Workday'),
         actions: [
-          // const AccountSwitcher(),
+          IconButton(
+            onPressed: () {
+              AppData.of(context).fetchData();
+            },
+            icon: Consumer<AppData>(
+                builder: (context, value, child) => value.isUpdating
+                    ? const Icon(Icons.cloud_sync)
+                    : const Icon(Icons.cloud_done)),
+          ),
           PopupMenuButton(
             itemBuilder: (context) => [
               const PopupMenuItem(
@@ -81,7 +90,7 @@ class _AppPageState extends State<AppPage> {
   }
 
   Widget getPage(int index) {
-    ///0: Task pool
+    ///0: Task poola
     ///1: My tasks
     ///
     ///TODO: Implement pages
@@ -89,7 +98,7 @@ class _AppPageState extends State<AppPage> {
       case 0:
         return Consumer<AppData>(
             builder: (context, appData, child) => TaskListView(
-                  tasks: appData.tasksPool,
+                  tasks: appData.tasks,
                   appData: appData,
                 ));
       case 1:
@@ -124,16 +133,7 @@ class _TaskListViewState extends State<TaskListView> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemBuilder: (context, index) {
-        Task task = widget.tasks[index];
-        return ListTile(
-          title: Text(task.description[0]), //TODO: Safeguard here
-          subtitle: Text("User ID: ${task.assignedTo}"),
-          onTap: () {
-            //TODO: Open task
-          },
-        );
-      },
+      itemBuilder: (context, index) => widget.tasks[index].tile,
       itemCount: widget.tasks.length,
     );
   }
