@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/ui/app_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -25,20 +26,22 @@ class _LoginPageState extends State<LoginPage> {
                 attemptLogin(email, password);
               }
             },
-            child: const Text('Log in'));
+            child: Text(AppLocalizations.of(context)!.loginFunction));
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Welcome!'),
+          Text(AppLocalizations.of(context)!.welcomeGreeting),
           TextField(
             onChanged: (value) => email = value,
-            decoration: const InputDecoration(labelText: 'Email'),
+            decoration:
+                InputDecoration(labelText: AppLocalizations.of(context)!.email),
           ),
           TextField(
             onChanged: (value) => password = value,
-            decoration: const InputDecoration(labelText: 'Password'),
+            decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.password),
           ),
           loginButton,
         ],
@@ -56,7 +59,8 @@ class _LoginPageState extends State<LoginPage> {
     if (result == false) {
       setState(() => attemptingLogin = false);
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to log in, check internet and credentials')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.loginFailedMessage)));
       return;
     }
 

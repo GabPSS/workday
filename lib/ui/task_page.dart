@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/model/task.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskPage extends StatefulWidget {
   final Task? task;
@@ -45,7 +46,7 @@ class _TaskPageState extends State<TaskPage> {
                   Navigator.pop(context, task);
                 },
                 child: Text(
-                  'SAVE',
+                  AppLocalizations.of(context)!.saveFunction,
                   style:
                       TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                 ))
@@ -57,7 +58,8 @@ class _TaskPageState extends State<TaskPage> {
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 initialValue: task.title,
-                decoration: const InputDecoration(hintText: 'Title'),
+                decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.taskTitle),
                 style: const TextStyle(
                   fontSize: 48,
                 ),
@@ -69,11 +71,14 @@ class _TaskPageState extends State<TaskPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
               child: DropdownButtonFormField<String?>(
-                decoration: const InputDecoration(
-                    labelText: "Assigned to", icon: Icon(Icons.person_outline)),
+                decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.assignedTo,
+                    icon: const Icon(Icons.person_outline)),
                 value: task.getAssignedToUser(context)?.email,
                 items: [
-                  const DropdownMenuItem(value: null, child: Text("None")),
+                  DropdownMenuItem(
+                      value: null,
+                      child: Text(AppLocalizations.of(context)!.noPerson)),
                   for (var item in userItems) item,
                 ],
                 onChanged: (value) {
@@ -86,9 +91,9 @@ class _TaskPageState extends State<TaskPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
               child: DateTimeField(
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.date_range_outlined),
-                  labelText: 'Created on',
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.date_range_outlined),
+                  labelText: AppLocalizations.of(context)!.createdOn,
                 ),
                 onDateSelected: (value) {
                   setState(() {
@@ -101,9 +106,9 @@ class _TaskPageState extends State<TaskPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
               child: DateTimeField(
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.date_range_outlined),
-                  labelText: 'Due',
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.date_range_outlined),
+                  labelText: AppLocalizations.of(context)!.dueOn,
                 ),
                 onDateSelected: (value) {
                   setState(() {
@@ -117,9 +122,9 @@ class _TaskPageState extends State<TaskPage> {
               padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
               child: DropdownButtonFormField<TaskStatus>(
                 value: task.status,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.auto_graph_outlined),
-                  labelText: "Progress",
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.auto_graph_outlined),
+                  labelText: AppLocalizations.of(context)!.progress,
                 ),
                 items: taskStatusViewStatuses
                     .map((e) => DropdownMenuItem<TaskStatus>(
@@ -135,9 +140,9 @@ class _TaskPageState extends State<TaskPage> {
               padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
               child: TextFormField(
                 initialValue: task.description.join('\n'),
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.description_outlined),
-                  labelText: 'Comments',
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.description_outlined),
+                  labelText: AppLocalizations.of(context)!.comments,
                 ),
                 maxLines: 5,
                 onChanged: (value) {

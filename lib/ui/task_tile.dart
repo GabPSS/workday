@@ -5,6 +5,7 @@ import 'package:workday/data/app_data.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/model/task.dart';
 import 'package:workday/ui/task_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskTile extends StatelessWidget {
   const TaskTile({
@@ -40,12 +41,13 @@ class TaskTile extends StatelessWidget {
             buildIconRow(
                 Icons.person,
                 Provider.of<AppData>(context).getUser(task.assignedTo)?.name ??
-                    "Not assigned"),
+                    AppLocalizations.of(context)!.noPersonLabel),
             buildIconRow(
                 Icons.calendar_today,
                 task.due != null
-                    ? "Due ${DateFormat.d().format(task.due!)}"
-                    : "No due date")
+                    ? AppLocalizations.of(context)!
+                        .dueOnLabel(DateFormat.d().format(task.due!))
+                    : AppLocalizations.of(context)!.noDueDateLabel)
           ],
         ),
         onTap: () async {

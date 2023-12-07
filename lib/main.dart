@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/data/login.dart';
-import 'package:workday/secrets.dart';
+import 'package:workday/api.dart';
 import 'package:workday/ui/app_page.dart';
 import 'package:workday/ui/login_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +34,14 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Workday',
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: const ColorScheme.dark(
+            primary: Colors.teal, onPrimary: Colors.white),
+      ),
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       home: loggedIn ? const AppPage() : const LoginPage(),
     );
   }

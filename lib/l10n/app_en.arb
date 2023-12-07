@@ -1,0 +1,107 @@
+{
+    "@@locale": "en",
+    "appTitle": "Workday",
+    "@appTitle": {
+        "description": "Application title"
+    },
+    "welcomeGreeting": "Welcome!",
+    "@welcomeGreeting": {
+        "description": "Greeting for new users logging in"
+    },
+    "loginFailedMessage": "Failed to log in, check internet and credentials",
+    "@loginFailedMessage": {
+        "description": "Message for when the login attempt fails"
+    },
+    "email": "Email",
+    "@email": {
+        "description": "Email field descriptor"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "Password field descriptor"
+    },
+    "allTasksNavMenuLabel": "All tasks",
+    "@allTasksNavMenuLabel": {
+        "description": "All tasks menu item label"
+    },
+    "todayTasksNavMenuLabel": "Today''s tasks",
+    "@todayTasksNavMenuLabel": {
+        "description": "Today's tasks menu item label"
+    },
+    "aboutAppMenuLabel": "About app",
+    "@aboutAppMenuLabel": {
+        "description": "About app menu item label"
+    },
+    "homePageMenuLabel": "Home",
+    "@homePageMenuLabel": {
+        "description": "Label for home page menu item"
+    },
+    "noAccountPlaceholder": "No account",
+    "@noAccountPlaceholder": {
+        "description": "Placeholder value for when there is no account logged in"
+    },
+    "noEmailPlaceholder": "No email address",
+    "@noEmailPlaceholder": {
+        "description": "Placeholder value for email address when no account is logged in"
+    },
+    "addTaskFunction": "Add task",
+    "@addTaskFunction": {
+        "description": "Function description for adding a task"
+    },
+    "loginFunction": "Log in",
+    "@loginFunction": {
+        "description": "Function description for logging into the system"
+    },
+    "saveFunction": "Save",
+    "@saveFunction": {
+        "description": "Function description for saving something"
+    },
+    "taskTitle": "Title",
+    "@taskTitle": {
+        "description": "Field descriptor for task title in task_page"
+    },
+    "assignedTo": "Assigned to",
+    "@assignedTo": {
+        "description": "Field descriptor for person to which the task is assigned to"
+    },
+    "noPerson": "None",
+    "@noPerson": {
+        "description": "Describes shortly when no one has been assigned a task",
+        "context": "Used on a field for assigning tasks to people"
+    },
+    "noPersonLabel": "Not assigned",
+    "@noPersonLabel": {
+        "description": "Describes when a task has not been assigned",
+        "context": "Used on a task tile, at a glance, for quick viewing"
+    },
+    "dueOnLabel": "Due {date}",
+    "@dueOnLabel": {
+        "description": "Describes when a task is due",
+        "context": "Used on a task tile, at a glance, for quick viewing",
+        "placeholders": {
+            "date": {
+                "type": "String"
+            }
+        }
+    },
+    "noDueDateLabel": "No due date",
+    "@noDueDateLabel": {
+        "description": "Describes that a task doesn't have a due date"
+    },
+    "createdOn": "Created on",
+    "@createdOn": {
+        "description": "Field descriptor for when the task was created"
+    },
+    "dueOn": "Due",
+    "@dueOn": {
+        "description": "Field descriptor for when the task is due"
+    },
+    "progress": "Progress",
+    "@progress": {
+        "description": "Field descriptor for how much progress has been made on a task"
+    },
+    "comments": "Comments",
+    "@comments": {
+        "description": "Field descriptor for informing additional details on a task"
+    }
+}

@@ -4,6 +4,7 @@ import 'package:workday/data/app_data.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/model/task.dart';
 import 'package:workday/ui/task_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key});
@@ -28,21 +29,24 @@ class _AppPageState extends State<AppPage> {
               Provider.of<AppData>(context, listen: false).addTask(result);
             }
           },
-          tooltip: 'Add task',
+          tooltip: AppLocalizations.of(context)!.addTaskFunction,
           child: const Icon(Icons.add_task),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'All tasks'),
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.assignment_ind), label: 'Today\'s tasks'),
+              icon: const Icon(Icons.list),
+              label: AppLocalizations.of(context)!.allTasksNavMenuLabel),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.assignment_ind),
+              label: AppLocalizations.of(context)!.todayTasksNavMenuLabel),
         ],
         currentIndex: selectedPage,
         onTap: (value) => setState(() => selectedPage = value),
       ),
       appBar: AppBar(
-        title: const Text('Workday'),
+        title: Text(AppLocalizations.of(context)!.appTitle),
         actions: [
           IconButton(
             onPressed: () {
@@ -55,9 +59,9 @@ class _AppPageState extends State<AppPage> {
           ),
           PopupMenuButton(
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'about',
-                child: Text('About app'),
+                child: Text(AppLocalizations.of(context)!.aboutAppMenuLabel),
               )
             ],
             onSelected: (value) {
@@ -78,12 +82,14 @@ class _AppPageState extends State<AppPage> {
       drawer: NavigationDrawer(children: [
         Consumer<Login>(
           builder: (context, value, child) => UserAccountsDrawerHeader(
-              accountName: Text(value.name ?? "No account"),
-              accountEmail: Text(value.email ?? "No email")),
+              accountName: Text(value.name ??
+                  AppLocalizations.of(context)!.noAccountPlaceholder),
+              accountEmail: Text(value.email ??
+                  AppLocalizations.of(context)!.noEmailPlaceholder)),
         ),
-        const ListTile(
-          leading: Icon(Icons.home),
-          title: Text('Home'),
+        ListTile(
+          leading: const Icon(Icons.home),
+          title: Text(AppLocalizations.of(context)!.homePageMenuLabel),
         )
       ]),
     );
