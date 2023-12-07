@@ -94,10 +94,9 @@ class Task {
   Future<void> update(BuildContext context,
       [Map<String, Object?>? data]) async {
     log('Updating task');
-    await Supabase.instance.client
-        .from('tasks')
-        .update(data ?? toMap())
-        .eq('id', id); //TODO: Could bring an error here?
+    await Supabase.instance.client.from('tasks').update(data ?? toMap()).eq(
+        'id',
+        id); //TODO: Could bring an error here? Yes it does! Task ID is null so nothing gets updated (???)
     if (!context.mounted) return;
     Provider.of<AppData>(context, listen: false).fetchData();
   }

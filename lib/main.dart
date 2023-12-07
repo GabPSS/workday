@@ -35,6 +35,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Workday',
       home: loggedIn ? const AppPage() : const LoginPage(),
     );
   }
