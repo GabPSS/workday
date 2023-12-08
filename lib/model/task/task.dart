@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide Provider, User;
 import 'package:workday/data/app_data.dart';
+import 'package:workday/model/dayinfo/dayinfo.dart';
 import 'package:workday/model/user.dart';
-import 'package:workday/ui/task_tile.dart';
+import 'package:workday/model/task/task_tile.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Task {
   String? id;
@@ -17,17 +19,21 @@ class Task {
   TaskStatus status = TaskStatus.open;
 
   Task(
-      {this.assignedTo,
+      {required AppData appData,
+      this.assignedTo,
       this.createdOn,
       required this.description,
       this.due,
       this.id,
       this.title = "",
-      this.status = TaskStatus.open});
+      this.status = TaskStatus.open})
+      : _appData = appData;
 
   bool get isAssigned => assignedTo != null;
   bool get isCompleted => status == TaskStatus.done;
-
+  DayInfo? get dayInfo =>
+      _appData.dayInfos.where((element) => element.task == this).singleOrNull;
+  final AppData _appData;
   TaskTile get tile => TaskTile(task: this);
 
   User? getAssignedToUser(BuildContext context) {
@@ -48,13 +54,13 @@ class Task {
     );
   }
 
-  static List<Task> parseTaskList(PostgrestList tasksData) {
+  static List<Task> parseTaskList(PostgrestList tasksData, AppData appData) {
     return tasksData.map((taskMap) {
-      return Task.fromMap(taskMap);
+      return Task.fromMap(taskMap, appData);
     }).toList();
   }
 
-  factory Task.fromMap(Map<String, Object?> map) {
+  factory Task.fromMap(Map<String, Object?> map, AppData appData) {
     var id = map['id'] as String?;
     var createdAt = DateTime.tryParse(map['created_at'] as String? ?? "");
     var due = DateTime.tryParse(map['due'] as String? ?? "");
@@ -64,6 +70,7 @@ class Task {
     var title = map['title'] as String;
 
     return Task(
+        appData: appData,
         id: id,
         createdOn: createdAt,
         due: due,
@@ -73,7 +80,7 @@ class Task {
         title: title);
   }
 
-  Task clone() => Task.fromMap(toMap());
+  Task clone() => Task.fromMap(toMap(), _appData);
 
   Future<void> update(BuildContext context,
       [Map<String, Object?>? data]) async {
@@ -99,12 +106,9 @@ class Task {
 
 enum TaskStatus { open, started, pending, done }
 
-const List<String> taskStatusViewTitles = [
-  "Open",
-  "Started",
-  "Pending",
-  "Done"
-];
+List<String> getTaskStatusViewTitles(BuildContext context) =>
+    AppLocalizations.of(context)!.taskStatuses.split(',');
+
 const List<TaskStatus> taskStatusViewStatuses = [
   TaskStatus.open,
   TaskStatus.started,

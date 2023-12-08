@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workday/data/login.dart';
-import 'package:workday/ui/app_page.dart';
+import 'package:workday/ui/workday_app.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
@@ -67,6 +67,6 @@ class _LoginPageState extends State<LoginPage> {
     if (!mounted) return;
 
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const AppPage()));
+        context, MaterialPageRoute(builder: (context) => const WorkdayApp()));
   }
 }

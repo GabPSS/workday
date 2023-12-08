@@ -20,11 +20,11 @@
     "@password": {
         "description": "Password field descriptor"
     },
-    "allTasksNavMenuLabel": "All tasks",
+    "allTasksNavMenuLabel": "Tasks",
     "@allTasksNavMenuLabel": {
         "description": "All tasks menu item label"
     },
-    "todayTasksNavMenuLabel": "Today''s tasks",
+    "todayTasksNavMenuLabel": "My day",
     "@todayTasksNavMenuLabel": {
         "description": "Today's tasks menu item label"
     },
@@ -55,6 +55,10 @@
     "saveFunction": "Save",
     "@saveFunction": {
         "description": "Function description for saving something"
+    },
+    "shareFunction": "Share",
+    "@shareFunction": {
+        "description": "Function description for sharing the generated job string"
     },
     "taskTitle": "Title",
     "@taskTitle": {
@@ -103,5 +107,29 @@
     "comments": "Comments",
     "@comments": {
         "description": "Field descriptor for informing additional details on a task"
+    },
+    "jobsStringTitle": "Jobs",
+    "@jobsStringTitle": {
+        "description": "Title for the string of generated jobs done in a day"
+    },
+    "tasksMyDaySectionTitle": "Tasks",
+    "@tasksMyDaySectionTitle": {
+        "description": "Title for the 'tasks' section in my day"
+    },
+    "quickNotesMyDaySectionTitle": "Quick notes",
+    "@quickNotesMyDaySectionTitle": {
+        "description": "Title for the 'quick notes' section in my day"
+    },
+    "jobStringPreview": "Preview (Tap to edit)",
+    "@jobStringPreview": {
+        "description": "Descriptor for a field where the user can preview the generated job string"
+    },
+    "enterToSubmit": "Press enter to submit!",
+    "@enterToSubmit": {
+        "description": "Helper text shown when the user has to press enter to save changes"
+    },
+    "taskStatuses": "Open,Started,Pending,Done",
+    "@taskStatuses": {
+        "description": "List of task status possibilities"
     }
 }

@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workday/data/app_data.dart';
-import 'package:workday/data/login.dart';
-import 'package:workday/model/task.dart';
+import 'package:workday/model/dayinfo/dayinfolist.dart';
+import 'package:workday/model/task/task.dart';
+import 'package:workday/ui/share_page.dart';
 import 'package:workday/ui/task_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class AppPage extends StatefulWidget {
-  const AppPage({super.key});
+import '../model/task/task_list_view.dart';
+
+class WorkdayApp extends StatefulWidget {
+  const WorkdayApp({super.key});
 
   @override
-  State<AppPage> createState() => _AppPageState();
+  State<WorkdayApp> createState() => _WorkdayAppState();
 }
 
-class _AppPageState extends State<AppPage> {
+class _WorkdayAppState extends State<WorkdayApp> {
   int selectedPage = 1;
 
   @override
@@ -39,7 +42,12 @@ class _AppPageState extends State<AppPage> {
               icon: const Icon(Icons.list),
               label: AppLocalizations.of(context)!.allTasksNavMenuLabel),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.assignment_ind),
+              icon: Consumer<AppData>(
+                builder: (context, value, child) => Badge.count(
+                  count: value.dayInfos.length,
+                  child: const Icon(Icons.today),
+                ),
+              ),
               label: AppLocalizations.of(context)!.todayTasksNavMenuLabel),
         ],
         currentIndex: selectedPage,
@@ -57,6 +65,16 @@ class _AppPageState extends State<AppPage> {
                     ? const Icon(Icons.cloud_sync)
                     : const Icon(Icons.cloud_done)),
           ),
+          IconButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => const Dialog.fullscreen(
+                    child: ShareDialog(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.share)),
           PopupMenuButton(
             itemBuilder: (context) => [
               PopupMenuItem(
@@ -79,27 +97,12 @@ class _AppPageState extends State<AppPage> {
             await Provider.of<AppData>(context, listen: false).fetchData();
           },
           child: getPage(selectedPage)),
-      drawer: NavigationDrawer(children: [
-        Consumer<Login>(
-          builder: (context, value, child) => UserAccountsDrawerHeader(
-              accountName: Text(value.name ??
-                  AppLocalizations.of(context)!.noAccountPlaceholder),
-              accountEmail: Text(value.email ??
-                  AppLocalizations.of(context)!.noEmailPlaceholder)),
-        ),
-        ListTile(
-          leading: const Icon(Icons.home),
-          title: Text(AppLocalizations.of(context)!.homePageMenuLabel),
-        )
-      ]),
     );
   }
 
   Widget getPage(int index) {
-    ///0: Task poola
-    ///1: My tasks
-    ///
-    ///TODO: Implement pages
+    ///0: Tasks
+    ///1: My day
     switch (index) {
       case 0:
         return Consumer<AppData>(
@@ -108,39 +111,11 @@ class _AppPageState extends State<AppPage> {
                   appData: appData,
                 ));
       case 1:
-        // return Consumer2<AppData, UserData>(
-        //     builder: (context, appData, userData, child) => TaskListView(
-        //           tasks: appData.getTasksForUser(userData.currentUser),
-        //           appData: appData,
-        //           userData: userData,
-        //         ));
-        return const Placeholder();
+        return Consumer<AppData>(
+            builder: (context, value, child) =>
+                DayInfoList(dayInfos: value.dayInfos));
       default:
         throw UnimplementedError();
     }
-  }
-}
-
-class TaskListView extends StatefulWidget {
-  final List<Task> tasks;
-  final AppData appData;
-
-  const TaskListView({
-    required this.tasks,
-    required this.appData,
-    super.key,
-  });
-
-  @override
-  State<TaskListView> createState() => _TaskListViewState();
-}
-
-class _TaskListViewState extends State<TaskListView> {
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) => widget.tasks[index].tile,
-      itemCount: widget.tasks.length,
-    );
   }
 }

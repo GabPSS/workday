@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/api.dart';
-import 'package:workday/ui/app_page.dart';
+import 'package:workday/ui/workday_app.dart';
 import 'package:workday/ui/login_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -42,7 +41,7 @@ class MainApp extends StatelessWidget {
             primary: Colors.teal, onPrimary: Colors.white),
       ),
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-      home: loggedIn ? const AppPage() : const LoginPage(),
+      home: loggedIn ? const WorkdayApp() : const LoginPage(),
     );
   }
 }

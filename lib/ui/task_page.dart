@@ -2,7 +2,7 @@ import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workday/data/app_data.dart';
-import 'package:workday/model/task.dart';
+import 'package:workday/model/task/task.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskPage extends StatefulWidget {
@@ -21,7 +21,9 @@ class _TaskPageState extends State<TaskPage> {
   @override
   void initState() {
     if (widget.task == null) {
-      task = Task(description: []);
+      task = Task(
+          appData: Provider.of<AppData>(context, listen: false),
+          description: []);
       newTask = true;
     } else {
       task = widget.task!.clone();
@@ -129,7 +131,8 @@ class _TaskPageState extends State<TaskPage> {
                 items: taskStatusViewStatuses
                     .map((e) => DropdownMenuItem<TaskStatus>(
                         value: e,
-                        child: Text(taskStatusViewTitles[taskStatusToInt(e)])))
+                        child: Text(getTaskStatusViewTitles(
+                            context)[taskStatusToInt(e)])))
                     .toList(),
                 onChanged: (value) {
                   task.status = value ?? TaskStatus.open;
