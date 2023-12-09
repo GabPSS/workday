@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:workday/data/login.dart';
+import 'package:workday/ui/about_dialog.dart';
 import 'package:workday/ui/workday_app.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -20,30 +22,65 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     var loginButton = attemptingLogin
         ? const CircularProgressIndicator()
-        : ElevatedButton(
+        : ElevatedButton.icon(
+            style: ButtonStyle(
+              maximumSize: MaterialStatePropertyAll(Size(200, 80)),
+            ),
+            icon: Icon(Icons.login),
             onPressed: () async {
               if (email.trim() != "" && password.trim() != "") {
                 attemptLogin(email, password);
               }
             },
-            child: Text(AppLocalizations.of(context)!.loginFunction));
+            label: Text(AppLocalizations.of(context)!.loginFunction));
     return Scaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(AppLocalizations.of(context)!.welcomeGreeting),
-          TextField(
-            onChanged: (value) => email = value,
-            decoration:
-                InputDecoration(labelText: AppLocalizations.of(context)!.email),
+          Text(
+            AppLocalizations.of(context)!.welcomeGreeting,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
-          TextField(
-            onChanged: (value) => password = value,
-            decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.password),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              onChanged: (value) => email = value,
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.email),
+            ),
           ),
-          loginButton,
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              obscureText: true,
+              onChanged: (value) => password = value,
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.password),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Expanded(child: loginButton),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextButton.icon(
+                      onPressed: () => showWorkdayAboutDialog(context),
+                      icon: Icon(Icons.help_outline),
+                      label: Text(
+                          AppLocalizations.of(context)!.aboutAppMenuLabel)),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

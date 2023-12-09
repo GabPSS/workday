@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/model/dayinfo/dayinfolist.dart';
 import 'package:workday/model/task/task.dart';
+import 'package:workday/ui/about_dialog.dart';
 import 'package:workday/ui/share_page.dart';
 import 'package:workday/ui/task_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -85,7 +86,7 @@ class _WorkdayAppState extends State<WorkdayApp> {
             onSelected: (value) {
               switch (value) {
                 case 'about':
-                  showAboutDialog(context: context);
+                  showWorkdayAboutDialog(context);
                   break;
               }
             },

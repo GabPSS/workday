@@ -1,5 +1,8 @@
 {
     "appTitle": "Workday",
+    "appDescription": "Um aplicativo pessoal para auditar e relatar tarefas realizadas ao longo de um dia de trabalho",
+    "appAuthor": "Feito por: Gabriel P.",
+    "viewSourceButtonLabel": "Confira nosso projeto!",
     "welcomeGreeting": "Bem-vindo(a)!",
     "loginFailedMessage": "Erro ao fazer login, verifique sua conexão com a internet e credenciais",
     "email": "Email",

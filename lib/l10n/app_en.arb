@@ -4,6 +4,26 @@
     "@appTitle": {
         "description": "Application title"
     },
+    "appVersion": "0.0.0",
+    "@appVersion": {
+        "description": "Applocation version"
+    },
+    "appDescription": "A personal task auditing app for reporting tasks done by the end of the day",
+    "@appDescription": {
+        "description": "Application description"
+    },
+    "appAuthor": "Made by: Gabriel P.",
+    "@appAuthor": {
+        "description": "Application author"
+    },
+    "appSourceRepo": "https://github.com/GabPSS/workday",
+    "@appSourceRepo": {
+        "description": "Application source code/project website"
+    },
+    "viewSourceButtonLabel": "Check out our project repo!",
+    "@viewSourceButtonLabel": {
+        "description": "Label for a button that launches the project website"
+    },
     "welcomeGreeting": "Welcome!",
     "@welcomeGreeting": {
         "description": "Greeting for new users logging in"
