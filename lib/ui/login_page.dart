@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/ui/about_dialog.dart';
 import 'package:workday/ui/workday_app.dart';
@@ -23,10 +22,10 @@ class _LoginPageState extends State<LoginPage> {
     var loginButton = attemptingLogin
         ? const CircularProgressIndicator()
         : ElevatedButton.icon(
-            style: ButtonStyle(
+            style: const ButtonStyle(
               maximumSize: MaterialStatePropertyAll(Size(200, 80)),
             ),
-            icon: Icon(Icons.login),
+            icon: const Icon(Icons.login),
             onPressed: () async {
               if (email.trim() != "" && password.trim() != "") {
                 attemptLogin(email, password);
@@ -74,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                 Expanded(
                   child: TextButton.icon(
                       onPressed: () => showWorkdayAboutDialog(context),
-                      icon: Icon(Icons.help_outline),
+                      icon: const Icon(Icons.help_outline),
                       label: Text(
                           AppLocalizations.of(context)!.aboutAppMenuLabel)),
                 ),
