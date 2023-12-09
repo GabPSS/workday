@@ -11,6 +11,7 @@
     "todayTasksNavMenuLabel": "Meu dia",
     "aboutAppMenuLabel": "Sobre o app",
     "homePageMenuLabel": "Início",
+    "signOutMenuLabel": "Desconectar conta",
     "noAccountPlaceholder": "Nenhuma conta",
     "noEmailPlaceholder": "Nenhum email",
     "addTaskFunction": "Criar tarefa",

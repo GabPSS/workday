@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workday/data/app_data.dart';
+import 'package:workday/data/login.dart';
 import 'package:workday/model/dayinfo/dayinfolist.dart';
 import 'package:workday/model/task/task.dart';
 import 'package:workday/ui/about_dialog.dart';
+import 'package:workday/ui/login_page.dart';
 import 'package:workday/ui/share_page.dart';
 import 'package:workday/ui/task_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -81,12 +83,24 @@ class _WorkdayAppState extends State<WorkdayApp> {
               PopupMenuItem(
                 value: 'about',
                 child: Text(AppLocalizations.of(context)!.aboutAppMenuLabel),
-              )
+              ),
+              PopupMenuItem(
+                  value: 'signout',
+                  child: Text(AppLocalizations.of(context)!.signOutMenuLabel))
             ],
             onSelected: (value) {
               switch (value) {
                 case 'about':
                   showWorkdayAboutDialog(context);
+                  break;
+                case 'signout':
+                  Login.signOut();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
+                  );
                   break;
               }
             },

@@ -19,53 +19,98 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    var loginButton = attemptingLogin
-        ? const CircularProgressIndicator()
-        : ElevatedButton.icon(
-            style: const ButtonStyle(
-              maximumSize: MaterialStatePropertyAll(Size(200, 80)),
-            ),
-            icon: const Icon(Icons.login),
-            onPressed: () async {
-              if (email.trim() != "" && password.trim() != "") {
-                attemptLogin(email, password);
-              }
-            },
-            label: Text(AppLocalizations.of(context)!.loginFunction));
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
+        body: MediaQuery.of(context).size.width < 700
+            ? buildLoginContent(context)
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).colorScheme.primary,
+                          spreadRadius: 0,
+                          blurRadius: 250,
+                        ),
+                      ]),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .background
+                              .withOpacity(0.8),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: SizedBox(
+                            width: 500,
+                            child: buildLoginContent(context),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ));
+  }
+
+  Column buildLoginContent(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
             AppLocalizations.of(context)!.welcomeGreeting,
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              onChanged: (value) => email = value,
-              decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.email),
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: TextField(
+            onChanged: (value) => email = value,
+            decoration:
+                InputDecoration(labelText: AppLocalizations.of(context)!.email),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              obscureText: true,
-              onChanged: (value) => password = value,
-              decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.password),
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: TextField(
+            obscureText: true,
+            onChanged: (value) => password = value,
+            decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.password),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(child: loginButton),
-              ],
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (attemptingLogin)
+                CircularProgressIndicator()
+              else
+                Expanded(
+                  child: ElevatedButton.icon(
+                      style: const ButtonStyle(
+                        maximumSize: MaterialStatePropertyAll(Size(200, 80)),
+                      ),
+                      icon: const Icon(Icons.login),
+                      onPressed: () async {
+                        if (email.trim() != "" && password.trim() != "") {
+                          attemptLogin(email, password);
+                        }
+                      },
+                      label: Text(AppLocalizations.of(context)!.loginFunction)),
+                ),
+            ],
           ),
+        ),
+        if (!attemptingLogin)
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
@@ -80,8 +125,7 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           )
-        ],
-      ),
+      ],
     );
   }
 

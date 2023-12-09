@@ -68,4 +68,8 @@ class Login extends ChangeNotifier {
     log('Welcome, $name');
     return name;
   }
+
+  static Future<void> signOut() async {
+    await Supabase.instance.client.auth.signOut();
+  }
 }
