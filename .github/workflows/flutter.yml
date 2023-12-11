@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Flutter web deployment
+name: flutter-web-deploy
 
 on:
   push:
@@ -11,8 +11,17 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,10 +29,16 @@ jobs:
       - uses: subosito/flutter-action@v2.12.0
 
       - name: Analyze code
-      - run: flutter analyze
+        run: flutter analyze
 
       - name: Build for web
-      - run: flutter build web
+        run: flutter build web
 
+      - name: Upload build results
+        uses: actions/upload-pages-artifact@v2.0.0
+        with:
+          path: 'build/web/.'
+
+      - name: Deploy to pages
+        uses: actions/deploy-pages@v3.0.1
         
-            
