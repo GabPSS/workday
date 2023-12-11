@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Text(
               AppLocalizations.of(context)!.welcomeGreeting,
               style: Theme.of(context).textTheme.titleLarge,
-              textScaleFactor: 1.5,
+              //textScaleFactor: 1.5,
             ),
           ),
           Padding(
