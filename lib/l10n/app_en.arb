@@ -4,6 +4,26 @@
     "@appTitle": {
         "description": "Application title"
     },
+    "appVersion": "0.0.0",
+    "@appVersion": {
+        "description": "Applocation version"
+    },
+    "appDescription": "A personal task auditing app for reporting tasks done by the end of the day",
+    "@appDescription": {
+        "description": "Application description"
+    },
+    "appAuthor": "Made by: Gabriel P.",
+    "@appAuthor": {
+        "description": "Application author"
+    },
+    "appSourceRepo": "https://github.com/GabPSS/workday",
+    "@appSourceRepo": {
+        "description": "Application source code/project website"
+    },
+    "viewSourceButtonLabel": "Check out our project repo!",
+    "@viewSourceButtonLabel": {
+        "description": "Label for a button that launches the project website"
+    },
     "welcomeGreeting": "Welcome!",
     "@welcomeGreeting": {
         "description": "Greeting for new users logging in"
@@ -11,6 +31,14 @@
     "loginFailedMessage": "Failed to log in, check internet and credentials",
     "@loginFailedMessage": {
         "description": "Message for when the login attempt fails"
+    },
+    "invalidEmailMessage": "Enter a valid email address",
+    "@invalidEmailMessage": {
+        "description": "Message shown when a user enters an invalid email address"
+    },
+    "invalidPasswordMessage": "Enter a password",
+    "@invalidPasswordMessage": {
+        "description": "Message shown when a user enters an invalid password"
     },
     "email": "Email",
     "@email": {
@@ -35,6 +63,10 @@
     "homePageMenuLabel": "Home",
     "@homePageMenuLabel": {
         "description": "Label for home page menu item"
+    },
+    "signOutMenuLabel": "Sign out",
+    "@signOutMenuLabel": {
+        "description": "Label for sign out menu item"
     },
     "noAccountPlaceholder": "No account",
     "@noAccountPlaceholder": {
