@@ -57,6 +57,9 @@
         "description": "Label for home page menu item"
     },
     "signOutMenuLabel": "Sign out",
+    "@signOutMenuLabel": {
+        "description": "Label for sign out menu item"
+    },
     "noAccountPlaceholder": "No account",
     "@noAccountPlaceholder": {
         "description": "Placeholder value for when there is no account logged in"
