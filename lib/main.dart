@@ -37,8 +37,10 @@ class MainApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: const ColorScheme.dark(
-            primary: Colors.teal, onPrimary: Colors.white),
+        colorScheme: ColorScheme.dark(
+          primary: Colors.teal,
+          onPrimary: Colors.white,
+        ),
       ),
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       home: loggedIn ? const WorkdayApp() : const LoginPage(),

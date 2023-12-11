@@ -12,9 +12,13 @@ class TaskTile extends StatelessWidget {
   const TaskTile({
     super.key,
     required this.task,
+    this.selected = false,
+    this.onTap,
   });
 
   final Task task;
+  final bool selected;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -64,14 +68,17 @@ class TaskTile extends StatelessWidget {
                     : AppLocalizations.of(context)!.noDueDateLabel)
           ],
         ),
-        onTap: () async {
-          Task? result = await Navigator.push(context,
-              MaterialPageRoute(builder: (context) => TaskPage(task: task)));
-          if (result != null) {
-            if (!context.mounted) return;
-            task.update(context, result.toMap());
-          }
-        },
+        onTap: onTap ??
+            () async {
+              Task? result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TaskPage(task: task)));
+              if (result != null) {
+                if (!context.mounted) return;
+                task.update(context, result.toMap());
+              }
+            },
       ),
     );
   }

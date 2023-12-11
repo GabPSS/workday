@@ -7,8 +7,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskPage extends StatefulWidget {
   final Task? task;
+  final bool widgetOnly;
 
-  const TaskPage({super.key, this.task});
+  const TaskPage({super.key, this.task, this.widgetOnly = false});
 
   @override
   State<TaskPage> createState() => _TaskPageState();
@@ -40,121 +41,152 @@ class _TaskPageState extends State<TaskPage> {
                   value: e.email,
                   child: Text(e.name),
                 ));
-    return Scaffold(
-        appBar: AppBar(
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context, task);
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.saveFunction,
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                ))
-          ],
+
+    ListView content = ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextFormField(
+            initialValue: task.title,
+            decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.taskTitle),
+            style: const TextStyle(
+              fontSize: 48,
+            ),
+            onChanged: (value) {
+              task.title = value.trim();
+            },
+          ),
         ),
-        body: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                initialValue: task.title,
-                decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.taskTitle),
-                style: const TextStyle(
-                  fontSize: 48,
-                ),
-                onChanged: (value) {
-                  task.title = value.trim();
-                },
-              ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+          child: DropdownButtonFormField<String?>(
+            decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.assignedTo,
+                icon: const Icon(Icons.person_outline)),
+            value: task.getAssignedToUser(context)?.email,
+            items: [
+              DropdownMenuItem(
+                  value: null,
+                  child: Text(AppLocalizations.of(context)!.noPerson)),
+              for (var item in userItems) item,
+            ],
+            onChanged: (value) {
+              setState(() {
+                task.assignedTo = value;
+              });
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+          child: DateTimeField(
+            decoration: InputDecoration(
+              icon: const Icon(Icons.date_range_outlined),
+              labelText: AppLocalizations.of(context)!.createdOn,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-              child: DropdownButtonFormField<String?>(
-                decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.assignedTo,
-                    icon: const Icon(Icons.person_outline)),
-                value: task.getAssignedToUser(context)?.email,
-                items: [
-                  DropdownMenuItem(
-                      value: null,
-                      child: Text(AppLocalizations.of(context)!.noPerson)),
-                  for (var item in userItems) item,
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    task.assignedTo = value;
-                  });
-                },
-              ),
+            onDateSelected: (value) {
+              setState(() {
+                task.createdOn = value;
+              });
+            },
+            selectedDate: task.createdOn,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+          child: DateTimeField(
+            decoration: InputDecoration(
+              icon: const Icon(Icons.date_range_outlined),
+              labelText: AppLocalizations.of(context)!.dueOn,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-              child: DateTimeField(
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.date_range_outlined),
-                  labelText: AppLocalizations.of(context)!.createdOn,
-                ),
-                onDateSelected: (value) {
-                  setState(() {
-                    task.createdOn = value;
-                  });
-                },
-                selectedDate: task.createdOn,
-              ),
+            onDateSelected: (value) {
+              setState(() {
+                task.due = value;
+              });
+            },
+            selectedDate: task.due,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+          child: DropdownButtonFormField<TaskStatus>(
+            value: task.status,
+            decoration: InputDecoration(
+              icon: const Icon(Icons.auto_graph_outlined),
+              labelText: AppLocalizations.of(context)!.progress,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-              child: DateTimeField(
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.date_range_outlined),
-                  labelText: AppLocalizations.of(context)!.dueOn,
-                ),
-                onDateSelected: (value) {
-                  setState(() {
-                    task.due = value;
-                  });
-                },
-                selectedDate: task.due,
-              ),
+            items: taskStatusViewStatuses
+                .map((e) => DropdownMenuItem<TaskStatus>(
+                    value: e,
+                    child: Text(
+                        getTaskStatusViewTitles(context)[taskStatusToInt(e)])))
+                .toList(),
+            onChanged: (value) {
+              task.status = value ?? TaskStatus.open;
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+          child: TextFormField(
+            initialValue: task.description.join('\n'),
+            decoration: InputDecoration(
+              icon: const Icon(Icons.description_outlined),
+              labelText: AppLocalizations.of(context)!.comments,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-              child: DropdownButtonFormField<TaskStatus>(
-                value: task.status,
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.auto_graph_outlined),
-                  labelText: AppLocalizations.of(context)!.progress,
-                ),
-                items: taskStatusViewStatuses
-                    .map((e) => DropdownMenuItem<TaskStatus>(
-                        value: e,
-                        child: Text(getTaskStatusViewTitles(
-                            context)[taskStatusToInt(e)])))
-                    .toList(),
-                onChanged: (value) {
-                  task.status = value ?? TaskStatus.open;
-                },
-              ),
+            maxLines: 5,
+            onChanged: (value) {
+              task.description =
+                  value.split('\n').map((e) => e.trim()).toList();
+            },
+          ),
+        ),
+      ],
+    );
+
+    return widget.widgetOnly
+        ? content
+        : Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                    onPressed: () async {
+                      bool? result = await showDialog<bool>(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text("Remove task?"),
+                          content: Text(
+                              "You can't recover this task once it's been deleted"),
+                          actions: [
+                            TextButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: Text("Cancel")),
+                            TextButton(
+                                onPressed: () => Navigator.pop(context, true),
+                                child: Text("Delete"))
+                          ],
+                        ),
+                      );
+
+                      if (result == true) {
+                        if (!mounted) return;
+                        widget.task?.delete(context);
+                        Navigator.pop(context);
+                      }
+                    },
+                    icon: Icon(Icons.delete)),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, task);
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.saveFunction,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary),
+                    ))
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-              child: TextFormField(
-                initialValue: task.description.join('\n'),
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.description_outlined),
-                  labelText: AppLocalizations.of(context)!.comments,
-                ),
-                maxLines: 5,
-                onChanged: (value) {
-                  task.description =
-                      value.split('\n').map((e) => e.trim()).toList();
-                },
-              ),
-            ),
-          ],
-        ));
+            body: content);
   }
 }
