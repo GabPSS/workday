@@ -5,6 +5,8 @@
     "viewSourceButtonLabel": "Confira nosso projeto!",
     "welcomeGreeting": "Bem-vindo(a)!",
     "loginFailedMessage": "Erro ao fazer login, verifique sua conexão com a internet e credenciais",
+    "invalidEmailMessage": "Digite um email válido",
+    "invalidPasswordMessage": "Digite sua senha",
     "email": "Email",
     "password": "Senha",
     "allTasksNavMenuLabel": "Tarefas",

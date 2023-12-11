@@ -32,6 +32,14 @@
     "@loginFailedMessage": {
         "description": "Message for when the login attempt fails"
     },
+    "invalidEmailMessage": "Enter a valid email address",
+    "@invalidEmailMessage": {
+        "description": "Message shown when a user enters an invalid email address"
+    },
+    "invalidPasswordMessage": "Enter a password",
+    "@invalidPasswordMessage": {
+        "description": "Message shown when a user enters an invalid password"
+    },
     "email": "Email",
     "@email": {
         "description": "Email field descriptor"
