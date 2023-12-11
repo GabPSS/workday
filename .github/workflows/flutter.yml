@@ -40,5 +40,6 @@ jobs:
           path: 'build/web/.'
 
       - name: Deploy to pages
+        id: deployment
         uses: actions/deploy-pages@v3.0.1
         
