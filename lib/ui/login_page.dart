@@ -41,7 +41,8 @@ class _LoginPageState extends State<LoginPage> {
                               .colorScheme
                               .background
                               .withOpacity(0.8),
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -67,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Text(
             AppLocalizations.of(context)!.welcomeGreeting,
             style: Theme.of(context).textTheme.titleLarge,
+            textScaleFactor: 1.5,
           ),
         ),
         Padding(
@@ -92,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (attemptingLogin)
-                CircularProgressIndicator()
+                const CircularProgressIndicator()
               else
                 Expanded(
                   child: ElevatedButton.icon(
