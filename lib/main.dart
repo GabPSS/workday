@@ -4,7 +4,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/api.dart';
-import 'package:workday/ui/workday_app.dart';
 import 'package:workday/ui/login_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -12,11 +11,16 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(url: backendUrl, anonKey: backendKey);
-  var appData = AppData.empty();
+
   Login login = Login();
+
+  AppData appData;
   bool loginResult = await login.fetch();
   if (loginResult) {
-    await appData.fetchData(false);
+    appData = AppData(me: login.user);
+    await appData.fetchData();
+  } else {
+    appData = AppData();
   }
 
   runApp(MultiProvider(providers: [
@@ -41,7 +45,7 @@ class MainApp extends StatelessWidget {
             primary: Colors.teal, onPrimary: Colors.white),
       ),
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-      home: loggedIn ? const WorkdayApp() : const LoginPage(),
+      home: loggedIn ? const Placeholder() : const LoginPage(),
     );
   }
 }

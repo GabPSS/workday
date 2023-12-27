@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:workday/model/user.dart' as wday;
 
 class Login extends ChangeNotifier {
   String? _email;
@@ -9,6 +10,12 @@ class Login extends ChangeNotifier {
 
   String? get email => _email;
   String? get name => _name;
+
+  wday.User? get user => email != null
+      ? name != null
+          ? wday.User(email: email!, name: name!)
+          : null
+      : null;
 
   Login({String? email, String? token, String? name})
       : _name = name,
@@ -21,8 +28,8 @@ class Login extends ChangeNotifier {
     if (session != null) {
       log('Session found');
       _email = session.user.email;
-      _name = await _getName(_email);
-      return true;
+      _name = await getName(_email);
+      return _name != null;
     } else {
       log('No logged in session');
       return trySignIn(emailOnFail, passwordOnFail);
@@ -45,7 +52,7 @@ class Login extends ChangeNotifier {
       log('Login successful, retrieving user data');
       var email = response.user!.email;
 
-      String? name = await _getName(email);
+      String? name = await getName(email);
 
       log('SUCCESS');
       _email = email;
@@ -56,7 +63,7 @@ class Login extends ChangeNotifier {
     return false;
   }
 
-  static Future<String?> _getName(String? email) async {
+  static Future<String?> getName(String? email) async {
     PostgrestList nameRow = await Supabase.instance.client
         .from('users')
         .select<PostgrestList>('name')

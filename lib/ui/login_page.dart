@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/ui/about_dialog.dart';
-import 'package:workday/ui/workday_app.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
@@ -176,11 +175,13 @@ class _LoginPageState extends State<LoginPage> {
 
     if (!mounted) return;
 
-    await Provider.of<AppData>(context, listen: false).fetchData(false);
+    await Provider.of<AppData>(context, listen: false).fetchData();
 
     if (!mounted) return;
 
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const WorkdayApp()));
+    // Navigator.pushReplacement(
+    //     context, MaterialPageRoute(builder: (context) => const WorkdayApp()));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Logged in!")));
   }
 }
