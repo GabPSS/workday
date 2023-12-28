@@ -16,7 +16,7 @@ class AllTasksFragment extends StatelessWidget {
         future: div.load(Provider.of<AppData>(context)),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return buildTaskList(div.tasks ?? []);
+            return TaskList(tasks: div.tasks ?? []);
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -24,10 +24,24 @@ class AllTasksFragment extends StatelessWidget {
       );
     }
 
-    return buildTaskList(div.tasks!);
+    return TaskList(tasks: div.tasks!);
   }
+}
 
-  ListView buildTaskList(List<Task> tasks) {
+class TaskList extends StatelessWidget {
+  final List<Task> tasks;
+
+  const TaskList({
+    super.key,
+    required this.tasks,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (tasks.isEmpty) {
+      return Center(child: Text("No tasks to show"));
+    }
+
     return ListView(
       children: tasks.map((e) => e.view).toList(),
     );

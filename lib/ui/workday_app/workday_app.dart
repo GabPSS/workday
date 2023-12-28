@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/model/division/division.dart';
+import 'package:workday/model/division/division_widget.dart';
 import 'package:workday/model/organization/organization.dart';
 
 import 'all_tasks_fragment.dart';
@@ -67,15 +68,12 @@ class _WorkdayAppState extends State<WorkdayApp> {
                               color: Theme.of(context).disabledColor)),
                     ),
                     for (Division div in org.getDivisions(data))
-                      ListTile(
-                        leading:
-                            const CircleAvatar(child: Icon(Icons.work_outline)),
-                        title: Text(div.name),
-                        onTap: () {
-                          setState(() => selectedDivision = div);
-                          Navigator.pop(context);
-                        },
-                      )
+                      DivisionWidget(
+                          div: div,
+                          onSelected: () {
+                            setState(() => selectedDivision = div);
+                            Navigator.pop(context);
+                          })
                   ],
                 )
             ],

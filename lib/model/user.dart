@@ -6,6 +6,8 @@ class User {
 
   User({required this.email, required this.name});
 
+  String get firstName => name.split(" ").first;
+
   static List<User> parseUsersList(supabase.PostgrestList source) {
     return source.map((e) {
       var name = e['name'] as String;

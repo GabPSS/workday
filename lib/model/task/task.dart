@@ -24,15 +24,10 @@ class Task {
       this.id,
       this.title = "",
       this.status = TaskStatus.open,
-      required this.division})
-      : _appData = appData;
+      required this.division});
 
   bool get isAssigned => assignedTo != null;
   bool get isCompleted => status == TaskStatus.done;
-  // DayInfo? get dayInfo =>
-  //     _appData.dayInfos.where((element) => element.task == this).singleOrNull;
-  // TODO: Reimplement these later
-  final AppData _appData;
   TaskWidget get view => TaskWidget(task: this);
   CircleAvatar get avatar {
     return CircleAvatar(

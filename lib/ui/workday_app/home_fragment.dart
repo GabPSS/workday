@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/model/division/division.dart';
 import 'package:workday/model/organization/organization.dart';
+import '../../model/organization/organization_widget.dart';
 
 class HomeFragment extends StatelessWidget {
   final Function(Division div) onDivSelected;
@@ -17,27 +19,19 @@ class HomeFragment extends StatelessWidget {
     return Consumer<AppData>(
       builder: (context, value, child) => ListView(
         children: [
-          Text(
-              "${value.me?.name} -- ${value.me?.email}"), //TODO: Change to a greeting message
-          for (Organization e in value.organizations)
-            Card(
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: const Icon(Icons.domain_outlined),
-                    title: Text(e.name),
-                  ),
-                  const Divider(),
-                  for (var div in e.getDivisions(value))
-                    ListTile(
-                      leading:
-                          const CircleAvatar(child: Icon(Icons.work_outline)),
-                      title: Text(div.name),
-                      onTap: () => onDivSelected(div),
-                    )
-                ],
-              ),
+          ListTile(
+            leading: const Icon(Icons
+                .nights_stay_outlined), //TODO: Localize this and also make it time-sensitive
+            title: Text(
+              "Good evening, ${value.me?.firstName}!",
+              textScaler: const TextScaler.linear(2),
             ),
+            subtitle: Text(DateFormat(
+                    "EEEE, dd", Localizations.localeOf(context).toLanguageTag())
+                .format(DateTime.now())),
+          ),
+          for (Organization org in value.organizations)
+            OrganizationWidget(org: org, onDivSelected: onDivSelected),
         ],
       ),
     );

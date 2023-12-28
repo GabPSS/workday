@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
-import 'package:workday/model/dayinfo/dayinfo.dart';
 import 'package:workday/model/organization/organization.dart';
 import 'package:workday/model/user.dart';
 
