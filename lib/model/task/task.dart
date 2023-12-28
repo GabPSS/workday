@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/model/division/division.dart';
+import 'package:workday/model/task/task_widget.dart';
 import 'package:workday/model/user.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -30,8 +31,9 @@ class Task {
   bool get isCompleted => status == TaskStatus.done;
   // DayInfo? get dayInfo =>
   //     _appData.dayInfos.where((element) => element.task == this).singleOrNull;
+  // TODO: Reimplement these later
   final AppData _appData;
-  // TaskTile get tile => TaskTile(task: this); TODO: Reimplement these later
+  TaskWidget get view => TaskWidget(task: this);
   CircleAvatar get avatar {
     return CircleAvatar(
       backgroundColor: taskStatusViewColors[taskStatusToInt(status)],
@@ -77,6 +79,11 @@ class Task {
   //   if (!context.mounted) return;
   //   Provider.of<AppData>(context, listen: false).fetchData();
   // }
+
+  Future<void> update(BuildContext context,
+      [Map<String, Object?>? data]) async {
+    //TODO: Implement this update function
+  }
 
   // Map<String, Object?> toMap() {
   //   return {

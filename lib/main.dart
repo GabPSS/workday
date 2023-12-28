@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/api.dart';
+import 'package:workday/ui/workday_app/workday_app.dart';
 import 'package:workday/ui/login_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -39,13 +40,16 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: const ColorScheme.dark(
-            primary: Colors.teal, onPrimary: Colors.white),
-      ),
+      theme: appTheme,
+      darkTheme: appTheme,
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-      home: loggedIn ? const Placeholder() : const LoginPage(),
+      home: loggedIn ? const WorkdayApp() : const LoginPage(),
     );
   }
 }
+
+ThemeData appTheme = ThemeData(
+  useMaterial3: true,
+  colorScheme:
+      const ColorScheme.dark(primary: Colors.teal, onPrimary: Colors.white),
+);

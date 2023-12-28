@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
+import 'package:workday/model/dayinfo/dayinfo.dart';
 import 'package:workday/model/organization/organization.dart';
 import 'package:workday/model/user.dart';
 
@@ -8,23 +11,22 @@ import '../model/division/division.dart';
 class AppData extends ChangeNotifier {
   List<Organization> organizations = List.empty(growable: true);
   List<Division> divisions = List.empty(growable: true);
-  // List<DayInfo> dayinfos = List.empty(growable: true);
 
-  final User? me;
+  User? me;
 
   AppData({this.me});
 
   Future<void> fetchData() async {
+    log("Fetching user data (${me?.email})");
     PostgrestList list = await Supabase.instance.client.rpc("get_user_info",
         params: {'email': me?.email}).select<PostgrestList>();
 
     for (PostgrestMap divisionData in list) {
       _getOrAddDivision(
-              divisionData["division_id"],
-              divisionData["division_name"],
-              _getOrAddOrganization(
-                  divisionData["org_id"], divisionData["org_name"]))
-          .fetchTasks(this);
+          divisionData["division_id"],
+          divisionData["division_name"],
+          _getOrAddOrganization(
+              divisionData["org_id"], divisionData["org_name"]));
     }
 
     //TODO: Fetch dayinfos
@@ -57,5 +59,9 @@ class AppData extends ChangeNotifier {
     Division division = Division(id: id, name: name, parent: organization);
     divisions.add(division);
     return division;
+  }
+
+  void addToMyDay({required String email, required String message}) {
+    //TODO: Create "AddToMyDay" method
   }
 }

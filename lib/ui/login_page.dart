@@ -4,6 +4,7 @@ import 'package:workday/data/app_data.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/ui/about_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:workday/ui/workday_app/workday_app.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -162,8 +163,9 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       attemptingLogin = true;
     });
-    var result = await Provider.of<Login>(context, listen: false)
-        .trySignIn(email, password);
+
+    var login = Provider.of<Login>(context, listen: false);
+    var result = await login.trySignIn(email, password);
 
     if (result == false) {
       setState(() => attemptingLogin = false);
@@ -175,13 +177,15 @@ class _LoginPageState extends State<LoginPage> {
 
     if (!mounted) return;
 
-    await Provider.of<AppData>(context, listen: false).fetchData();
+    var appData = Provider.of<AppData>(context, listen: false);
+    appData.me = login.user;
+    await appData.fetchData();
 
     if (!mounted) return;
 
-    // Navigator.pushReplacement(
-    //     context, MaterialPageRoute(builder: (context) => const WorkdayApp()));
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Logged in!")));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const WorkdayApp()));
+    // ScaffoldMessenger.of(context)
+    //     .showSnackBar(SnackBar(content: Text("Logged in!")));
   }
 }
