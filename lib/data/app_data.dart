@@ -27,8 +27,6 @@ class AppData extends ChangeNotifier {
           _getOrAddOrganization(
               divisionData["org_id"], divisionData["org_name"]));
     }
-
-    //TODO: Fetch dayinfos
   }
 
   Future<void> updateAll() async {

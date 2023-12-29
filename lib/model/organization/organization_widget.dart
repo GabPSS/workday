@@ -18,20 +18,23 @@ class OrganizationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          ListTile(
-            leading: const Icon(Icons.domain_outlined),
-            title: Text(org.name),
-          ),
-          const Divider(),
-          for (var div in org.getDivisions(Provider.of<AppData>(context)))
-            DivisionWidget(
-              div: div,
-              onSelected: () => onDivSelected(div),
-            )
-        ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Column(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.domain_outlined),
+              title: Text(org.name),
+            ),
+            const Divider(),
+            for (var div in org.getDivisions(Provider.of<AppData>(context)))
+              DivisionWidget(
+                div: div,
+                onSelected: () => onDivSelected(div),
+              )
+          ],
+        ),
       ),
     );
   }

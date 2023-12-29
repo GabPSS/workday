@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:workday/model/task/task.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:workday/model/task/task_page.dart';
 
 class TaskWidget extends StatelessWidget {
   final Task task;
@@ -29,6 +30,11 @@ class TaskWidget extends StatelessWidget {
                   : AppLocalizations.of(context)!.noDueDateLabel)
         ],
       ),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TaskPage(task: task),
+          )),
     );
   }
 
