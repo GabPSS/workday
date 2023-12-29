@@ -1,16 +1,21 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:workday/model/task/task.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:workday/model/task/task_page.dart';
 
 class TaskWidget extends StatelessWidget {
   final Task task;
+  final Function()? onTap;
 
-  const TaskWidget({super.key, required this.task});
+  const TaskWidget({super.key, required this.task, this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    bool desktopStyle = !kIsWeb && !Platform.isAndroid && !Platform.isIOS;
+
     return ListTile(
       leading: buildStatusPicker(context),
       title: Text(task.title),
@@ -30,11 +35,7 @@ class TaskWidget extends StatelessWidget {
                   : AppLocalizations.of(context)!.noDueDateLabel)
         ],
       ),
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TaskPage(task: task),
-          )),
+      onTap: onTap,
     );
   }
 

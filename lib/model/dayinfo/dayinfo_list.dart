@@ -4,6 +4,7 @@ import 'package:workday/data/app_data.dart';
 import 'package:workday/data/login.dart';
 import 'package:workday/model/dayinfo/dayinfo.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:workday/model/task/task_widget.dart';
 
 class DayInfoList extends StatelessWidget {
   final List<DayInfo> dayInfos;
@@ -28,7 +29,8 @@ class DayInfoList extends StatelessWidget {
                 title:
                     Text(AppLocalizations.of(context)!.tasksMyDaySectionTitle),
               ),
-              for (var taskInfo in taskDayInfos) taskInfo.task!.view
+              for (var taskInfo in taskDayInfos)
+                TaskWidget(task: taskInfo.task!)
             ],
           ),
         Column(children: [

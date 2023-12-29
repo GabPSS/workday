@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/model/division/division.dart';
-import 'package:workday/model/task/task_widget.dart';
 import 'package:workday/model/user.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -28,7 +27,6 @@ class Task {
 
   bool get isAssigned => assignedTo != null;
   bool get isCompleted => status == TaskStatus.done;
-  TaskWidget get view => TaskWidget(task: this);
   CircleAvatar get avatar {
     return CircleAvatar(
       backgroundColor: taskStatusViewColors[taskStatusToInt(status)],

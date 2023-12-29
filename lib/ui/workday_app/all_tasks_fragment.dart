@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workday/data/app_data.dart';
 import 'package:workday/model/division/division.dart';
-import 'package:workday/model/task/task.dart';
+
+import '../../model/task/task_list.dart';
 
 class AllTasksFragment extends StatelessWidget {
   final Division div;
@@ -25,25 +26,5 @@ class AllTasksFragment extends StatelessWidget {
     }
 
     return TaskList(tasks: div.tasks!);
-  }
-}
-
-class TaskList extends StatelessWidget {
-  final List<Task> tasks;
-
-  const TaskList({
-    super.key,
-    required this.tasks,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (tasks.isEmpty) {
-      return Center(child: Text("No tasks to show"));
-    }
-
-    return ListView(
-      children: tasks.map((e) => e.view).toList(),
-    );
   }
 }
